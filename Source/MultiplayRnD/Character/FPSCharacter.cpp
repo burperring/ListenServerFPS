@@ -49,6 +49,13 @@ void AFPSCharacter::GetLifetimeReplicatedProps(TArray<class FLifetimeProperty>& 
 	DOREPLIFETIME_CONDITION(AFPSCharacter, OverlappingWeapon, COND_OwnerOnly);
 }
 
+AWeapon* AFPSCharacter::GetEquipWeapon() const
+{
+	if (WeaponComponent == nullptr) return nullptr;
+
+	return WeaponComponent->GetEquippedWeapon();
+}
+
 void AFPSCharacter::BeginPlay()
 {
 	Super::BeginPlay();

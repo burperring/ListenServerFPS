@@ -36,4 +36,8 @@ private:
 	bool bIsCrouch;
 	UPROPERTY(BlueprintReadOnly, Category = "Character", meta = (AllowPrivateAccess = "true"))
 	bool bIsAiming;
+	UPROPERTY(BlueprintReadOnly, Category = "Character", meta = (AllowPrivateAccess = "true"))
+	FTransform LeftHandTransform;
+
+	class AWeapon* EquippedWeapon;
 };

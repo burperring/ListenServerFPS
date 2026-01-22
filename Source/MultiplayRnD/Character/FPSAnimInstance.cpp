@@ -4,6 +4,7 @@
 #include "FPSCharacter.h"
 #include "Runtime/AnimGraphRuntime/Public/KismetAnimationLibrary.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include "MultiplayRnD/Weapon/Weapon.h"
 
 void UFPSAnimInstance::NativeInitializeAnimation()
 {
@@ -36,5 +37,18 @@ void UFPSAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 	bIsAccelerating = FPSCharacter->GetCharacterMovement()->GetCurrentAcceleration().Size() > 0.f;
 	bIsCrouch = FPSCharacter->GetCharacterMovement()->IsCrouching();
 	bWeaponEquiped = FPSCharacter->IsWeaponEquiped();
+	EquippedWeapon = FPSCharacter->GetEquipWeapon();
 	bIsAiming = FPSCharacter->IsAiming();
+
+	// Weapon Left Hand IK
+	if (bWeaponEquiped && EquippedWeapon && EquippedWeapon->GetWeaponMesh() && FPSCharacter->GetMesh())
+	{
+		LeftHandTransform = EquippedWeapon->GetWeaponMesh()->GetSocketTransform(FName("LeftHandSocket"), RTS_World);
+
+		FVector OutPosition;
+		FRotator OutRotation;
+		FPSCharacter->GetMesh()->TransformToBoneSpace(FName("hand_r"), LeftHandTransform.GetLocation(), FRotator::ZeroRotator, OutPosition, OutRotation);
+		LeftHandTransform.SetLocation(OutPosition);
+		LeftHandTransform.SetRotation(FQuat(OutRotation));
+	}
 }

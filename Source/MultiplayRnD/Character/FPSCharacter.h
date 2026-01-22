@@ -50,6 +50,7 @@ public:
 	bool IsAiming();
 
 	FORCEINLINE float GetAO_Pitch() const { return AO_Pitch; };
+	AWeapon* GetEquipWeapon() const;
 	
 protected:
 	virtual void BeginPlay() override;
